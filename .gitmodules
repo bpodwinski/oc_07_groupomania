@@ -1,3 +1,4 @@
 [submodule "api"]
 	path = api
-	url = https://github.com/bpodwinski/oc_07_groupomania_api
+	url = git@github.com:bpodwinski/oc_07_groupomania_api.git
+	branch = master
