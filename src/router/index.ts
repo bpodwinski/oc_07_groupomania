@@ -22,7 +22,7 @@ const NotAuth = (to: any, from: any, next: Function) => {
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: "",
     name: "Home",
     component: () => import("@/views/Home.vue"),
     beforeEnter: IsAuth,

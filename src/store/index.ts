@@ -34,7 +34,6 @@ export default new Vuex.Store({
         const res: any = await AuthService.Login(credentials);
         commit("setUser", res.data);
         commit("setError");
-        console.log(res.data);
         router.push({ name: "Home" });
       } catch (e) {
         commit("setError", e.res.data.error);
