@@ -1,8 +1,9 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import PostService from "../services/PostService";
-import AuthService from "../services/AuthService";
 import router from "../router/index";
+
+import AuthService from "../services/AuthService";
+import PostService from "../services/PostService";
 
 Vue.use(Vuex);
 
@@ -13,18 +14,6 @@ export default new Vuex.Store({
     allPosts: (state) => state.posts,
   },
   actions: {
-    async fetchPosts({ commit }) {
-      const res: any = await PostService.getPost();
-      commit("setPosts", res.data);
-    },
-    async addPost({ commit }, post: object) {
-      const res: any = await PostService.addPost(post);
-      commit("newPost", res.data);
-    },
-    async deletePost({ commit }, id: number) {
-      await PostService.deletePost(id);
-      commit("removePost", id);
-    },
     async Register({ commit }, credentials: any) {
       await AuthService.Register(credentials);
       commit("setError", credentials);
@@ -43,6 +32,18 @@ export default new Vuex.Store({
       await AuthService.Logout();
       commit("setUser", null);
       router.push({ name: "Login" });
+    },
+    async fetchPosts({ commit }) {
+      const res: any = await PostService.getPost();
+      commit("setPosts", res.data);
+    },
+    async addPost({ commit }, post: object) {
+      const res: any = await PostService.addPost(post);
+      commit("newPost", res.data);
+    },
+    async deletePost({ commit }, id: number) {
+      await PostService.deletePost(id);
+      commit("removePost", id);
     },
   },
   mutations: {

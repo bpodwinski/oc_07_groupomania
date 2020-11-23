@@ -10,4 +10,7 @@ export default {
   getUser(id: any) {
     return Api.get("/user/" + id);
   },
+  updateUser(id: any, data: object) {
+    return Api.post("/user/" + id, data);
+  },
 };
