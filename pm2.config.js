@@ -4,7 +4,7 @@ if (process.env.NODE_ENV === "development") {
       {
         name: "groupomania-api",
         cwd: "./api",
-        script: "npm run start",
+        script: "NODE_ENV=production node index.js",
         watch: false,
         time: false,
         log_file: "var/log/api.log"

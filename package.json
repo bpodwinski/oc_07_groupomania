@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "api": "./utils/scripts/api.sh",
     "dev": "NODE_ENV=development pm2 restart pm2.config.js && pm2 logs",
-    "start": "NODE_ENV=production pm2 restart pm2.config.js --env production",
+    "start": "NODE_ENV=production pm2 restart pm2.config.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -18,6 +19,7 @@
     "moment": "^2.29.1",
     "register-service-worker": "^1.7.1",
     "trumbowyg": "^2.21.0",
+    "ts-dotenv": "^0.8.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.6",
