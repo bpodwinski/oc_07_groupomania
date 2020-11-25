@@ -13,7 +13,7 @@ export default {
   name: "Home",
   components: {
     PostList,
-    AddPost
-  }
+    AddPost,
+  },
 };
 </script>
