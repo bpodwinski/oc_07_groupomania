@@ -1,0 +1,14 @@
+{
+  "register": "S'enregistrer",
+  "firstname": "Prénom",
+  "lastname": "Nom",
+  "division": "Service",
+  "email": "E-mail",
+  "password": "Mot de passe",
+  "confirmPassword": "Confirmer le mot de passe",
+  "login": "Se connecter",
+  "logout": "Déconnexion",
+  "profile": "Mon profil",
+  "update": "Mettre à jour",
+  "return": "Retour"
+}

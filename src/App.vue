@@ -20,29 +20,8 @@
         @click="drawer = true"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-items class="hidden-xs-only">
-        <template v-if="user.userId">
-          <v-btn
-            text
-            v-for="item in menuLogged"
-            :key="item.title"
-            :to="{ name: item.name, params: { id: user.userId } }"
-          >
-            <v-icon left>{{ item.icon }}</v-icon>
-            {{ item.title }}
-          </v-btn>
-        </template>
-        <template v-else>
-          <v-btn
-            text
-            v-for="item in menu"
-            :key="item.title"
-            :to="{ name: item.name }"
-          >
-            <v-icon left>{{ item.icon }}</v-icon> {{ item.title }}
-          </v-btn>
-        </template>
-      </v-toolbar-items>
+      <SwitchLanguage />
+      <AuthMenu />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary right>
@@ -62,18 +41,27 @@
     </v-navigation-drawer>
 
     <v-main>
-      <router-view />
+      <v-container>
+        <router-view />
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import SwitchLanguage from "@/components/SwitchLanguage.vue";
+import AuthMenu from "@/components/Nav/AuthMenu.vue";
 import { mapGetters, mapActions } from "vuex";
 import moment from "moment";
 
 export default Vue.extend({
   name: "App",
+
+  components: {
+    SwitchLanguage,
+    AuthMenu,
+  },
 
   data() {
     return {

@@ -1,0 +1,14 @@
+{
+  "register": "Sign Up",
+  "firstname": "First Name",
+  "lastname": "Last Name",
+  "division": "Division",
+  "email": "E-mail",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "login": "Login",
+  "logout": "Logout",
+  "profile": "My profile",
+  "update": "Update",
+  "return": "Return"
+}
