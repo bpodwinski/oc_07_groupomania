@@ -22,27 +22,28 @@ const NotAuth = (to: any, from: any, next: Function) => {
 
 const routes: Array<RouteConfig> = [
   {
-    path: "",
+    path: "/",
     name: "Home",
     component: () => import("@/views/Home.vue"),
     beforeEnter: IsAuth,
   },
   {
-    path: "login",
+    path: "/login",
     name: "Login",
     component: () => import("@/views/Login.vue"),
     beforeEnter: NotAuth,
   },
   {
-    path: "register",
+    path: "/register",
     name: "Register",
     component: () => import("@/views/Register.vue"),
     beforeEnter: NotAuth,
   },
   {
-    path: "account/:id",
+    path: "/account/:id",
     name: "Account",
     component: () => import("@/views/Account.vue"),
+    beforeEnter: IsAuth,
   },
 ];
 
