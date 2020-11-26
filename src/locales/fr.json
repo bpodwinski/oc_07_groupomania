@@ -10,6 +10,12 @@
   "logout": "Déconnexion",
   "profile": "Mon profil",
   "update": "Mettre à jour",
+  "delete": "Supprimer",
   "return": "Retour",
-  "send": "Envoyer"
+  "send": "Envoyer",
+  "post.create": "Créer un message",
+  "post.empty": "Il n'y a aucun message !",
+  "post.title": "Titre",
+  "post.description": "Description",
+  "post.body": "Texte"
 }

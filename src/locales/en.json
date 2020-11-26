@@ -10,6 +10,12 @@
   "logout": "Logout",
   "profile": "My profile",
   "update": "Update",
+  "delete": "Delete",
   "return": "Return",
-  "send": "Send"
+  "send": "Send",
+  "post.create": "Create Post",
+  "post.empty": "There is no post!",
+  "post.title": "Title",
+  "post.description": "Description",
+  "post.body": "Text"
 }
