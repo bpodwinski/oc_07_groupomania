@@ -1,17 +1,30 @@
 <template>
-  <v-col cols="12">
+  <v-card>
+    <v-card-title>{{ $t("post.create") }}</v-card-title>
     <v-form>
-      <v-text-field v-model="title" label="Title"></v-text-field>
-      <v-text-field v-model="description" label="Description"></v-text-field>
-      <v-textarea v-model="text" label="Text"></v-textarea>
-      <v-btn
-        color="indigo lighten-2 white--text"
-        type="submit"
-        @click="submit(userID, title, description, text)"
-        >{{ $t("send") }}</v-btn
-      >
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field
+              v-model="title"
+              :label="$t('post.title')"
+            ></v-text-field>
+            <v-text-field
+              v-model="description"
+              :label="$t('post.description')"
+            ></v-text-field>
+            <v-textarea v-model="text" :label="$t('post.body')"></v-textarea>
+            <v-btn
+              color="indigo lighten-2 white--text"
+              type="submit"
+              @click="submit(userID, title, description, text)"
+              >{{ $t("send") }}</v-btn
+            >
+          </v-col>
+        </v-row>
+      </v-container>
     </v-form>
-  </v-col>
+  </v-card>
 </template>
 
 <script lang="ts">

@@ -25,7 +25,7 @@
     </v-app-bar>
 
     <v-main>
-      <v-container>
+      <v-container class="main-container">
         <router-view />
       </v-container>
     </v-main>
@@ -60,3 +60,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.main-container {
+  max-width: 980px !important;
+}
+</style>

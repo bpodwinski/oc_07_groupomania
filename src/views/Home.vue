@@ -11,6 +11,7 @@ import AddPost from "@/components/Post/AddPost";
 
 export default {
   name: "Home",
+
   components: {
     PostList,
     AddPost,
