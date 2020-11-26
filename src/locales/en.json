@@ -10,5 +10,6 @@
   "logout": "Logout",
   "profile": "My profile",
   "update": "Update",
-  "return": "Return"
+  "return": "Return",
+  "send": "Send"
 }

@@ -10,5 +10,6 @@
   "logout": "Déconnexion",
   "profile": "Mon profil",
   "update": "Mettre à jour",
-  "return": "Retour"
+  "return": "Retour",
+  "send": "Envoyer"
 }
