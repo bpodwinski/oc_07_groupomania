@@ -3,11 +3,7 @@
     <v-menu bottom offset-y>
       <template v-slot:activator="{ attrs, on }">
         <v-btn text v-bind="attrs" v-on="on">
-          <v-gravatar
-            :mail="$store.state.account.user.email"
-            alt="Avatar"
-            :size="30"
-          />
+          <v-gravatar :mail="user.email" alt="Avatar" :size="30" />
         </v-btn>
       </template>
 
@@ -21,7 +17,7 @@
             {{ $t("profile") }}</v-list-item-title
           >
         </v-list-item>
-        <v-list-item :to="{ name: 'Logout' }">
+        <v-list-item @click="logout">
           <v-list-item-title
             ><v-icon left>mdi-logout</v-icon>
             {{ $t("logout") }}</v-list-item-title
@@ -40,7 +36,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Gravatar from "vue-gravatar";
 
 Vue.component("v-gravatar", Gravatar);
@@ -48,8 +44,14 @@ Vue.component("v-gravatar", Gravatar);
 export default {
   name: "AuthMenu",
 
-  computed: {
-    ...mapGetters(["user"]),
+  methods: {
+    ...mapActions(["Logout"]),
+
+    logout() {
+      this.Logout();
+    },
   },
+
+  computed: mapGetters(["user"]),
 };
 </script>
