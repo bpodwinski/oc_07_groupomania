@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_VER=1.0.5
+API_VER=1.1.0
 
 # check if api folder exist
 if [ ! -d api ]
