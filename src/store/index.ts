@@ -1,62 +1,27 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "../router/index";
 
-import account from "./account";
-
-import AuthService from "../services/AuthService";
-import PostService from "../services/PostService";
+// import modules
+import auth from "./auth";
+import post from "./post";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    account,
+    auth,
+    post,
   },
 
   getters: {
-    error: (state) => state.error,
-    allPosts: (state) => state.posts,
-  },
-
-  actions: {
-    async Register({ commit }, credentials: any) {
-      await AuthService.Register(credentials);
-      commit("setError", credentials);
-    },
-
-    async Logout({ commit }) {
-      await AuthService.Logout();
-      commit("setUser", null);
-      router.push({ name: "Login" });
-    },
-
-    async fetchPosts({ commit }) {
-      const res: any = await PostService.getPost();
-      commit("setPosts", res.data);
-    },
-
-    async addPost({ commit }, post: object) {
-      const res: any = await PostService.addPost(post);
-      commit("newPost", res.data);
-    },
-
-    async deletePost({ commit }, id: number) {
-      await PostService.deletePost(id);
-      commit("removePost", id);
-    },
+    error: state => state.error,
   },
 
   mutations: {
     setError: (state, error): any => (state.error = error),
-    setPosts: (state, posts: any) => (state.posts = posts),
-    newPost: (state, post: object) => state.posts.push(post),
-    removePost: (state, id: number) =>
-      (state.posts = state.posts.filter((post) => post.id !== id)),
   },
 
   state: {
-    posts: [],
     error: "",
   },
 });
