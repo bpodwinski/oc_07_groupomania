@@ -5,7 +5,7 @@
     </v-app-bar>
 
     <validation-observer ref="loginForm" v-slot="{ invalid }">
-      <v-form @submit.prevent="submit" class="px-5 py-2">
+      <v-form @submit.prevent="login">
         <v-container>
           <v-row>
             <v-col cols="12">
@@ -103,7 +103,8 @@ export default Vue.extend({
 
   methods: {
     ...mapActions(["Login", "resUserData"]),
-    async submit() {
+
+    async login() {
       this.$refs.loginForm.validate();
       await this.Login({
         email: this.email,

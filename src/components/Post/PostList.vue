@@ -45,7 +45,7 @@
 
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="overline mb-4 text-end">
+              <div class="overline text-end">
                 {{ date(post.createdAt) }}
               </div>
               <div>{{ post.description }}</div>
@@ -60,7 +60,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
-import PostService from "../services/PostService";
+import PostService from "../../services/PostService";
 
 export default Vue.extend({
   name: "PostList",
@@ -90,3 +90,12 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style lang="scss">
+.overline {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0 15px 5px 0 !important;
+}
+</style>

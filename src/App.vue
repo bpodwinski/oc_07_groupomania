@@ -24,22 +24,6 @@
       <AuthMenu />
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary right>
-      <v-list nav dense>
-        <v-list-item-group
-          v-model="group"
-          active-class="indigo--text text--accent-4"
-        >
-          <v-list-item v-for="item in menu" :key="item.title" :to="item.path">
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-main>
       <v-container>
         <router-view />
@@ -53,7 +37,6 @@ import Vue from "vue";
 import SwitchLanguage from "@/components/SwitchLanguage.vue";
 import AuthMenu from "@/components/Nav/AuthMenu.vue";
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment";
 
 export default Vue.extend({
   name: "App",
@@ -67,22 +50,6 @@ export default Vue.extend({
     return {
       drawer: false,
       group: null,
-      menu: [
-        {
-          title: "Créer un compte",
-          name: "Register",
-          icon: "mdi-account-plus",
-        },
-        { title: "Connexion", name: "Login", icon: "mdi-account" },
-      ],
-      menuLogged: [
-        { title: "Mon compte", name: "Account", icon: "mdi-account" },
-        {
-          title: "Déconnexion",
-          name: "Logout",
-          icon: "mdi-logout",
-        },
-      ],
     };
   },
   methods: {

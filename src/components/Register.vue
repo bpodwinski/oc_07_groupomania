@@ -5,7 +5,7 @@
     </v-app-bar>
 
     <validation-observer ref="registerForm" v-slot="{ invalid }">
-      <v-form>
+      <v-form @submit.prevent="register">
         <v-container>
           <v-row>
             <v-col cols="12">
@@ -54,7 +54,6 @@
                 rules="required|email|max:128"
               >
                 <v-text-field
-                  @focusout="keelItWithFire"
                   :error-messages="errors"
                   class="email"
                   v-model="email"
@@ -101,7 +100,6 @@
 
             <v-btn
               depressed
-              @click="onSubmit"
               type="submit"
               :disabled="invalid"
               color="indigo lighten-2 white--text"
@@ -161,17 +159,11 @@ export default Vue.extend({
   },
 
   methods: {
-    keelItWithFire(e) {
-      e.preventDefault();
-      let dataTest: any = document.querySelector(".email input");
-      dataTest = dataTest.value;
-      console.log(dataTest);
-      return dataTest;
-    },
     ...mapActions(["Register", "Login"]),
-    onSubmit(e) {
-      e.preventDefault();
-      this.Register({
+
+    async register() {
+      this.$refs.registerForm.validate();
+      await this.Register({
         firstname: this.firstname,
         lastname: this.lastname,
         service: this.service,
@@ -180,9 +172,6 @@ export default Vue.extend({
       }).then(() => {
         this.Login({ email: this.email, password: this.password });
       });
-    },
-    validate() {
-      this.$refs.form.validate();
     },
   },
 
