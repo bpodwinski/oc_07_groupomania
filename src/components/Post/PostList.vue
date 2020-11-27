@@ -14,7 +14,7 @@
       >
         <v-app-bar flat>
           <v-toolbar-title class="title">
-            Toto
+            Toto {{ $i18n.locale }}
           </v-toolbar-title>
           <v-spacer></v-spacer>
 
@@ -41,12 +41,13 @@
 
         <v-list-item three-line>
           <v-list-item-content>
-            <h3>{{ post.title }}</h3>
+            <h3 class="mb-5">{{ post.title }}</h3>
+
+            <div class="mb-10">{{ post.text }}</div>
             <div class="overline text-end">
               <v-icon>mdi-calendar</v-icon>
-              {{ date(post.createdAt) }}
+              {{ post.createdAt | dateFromNow }}
             </div>
-            <div>{{ post.description }}</div>
           </v-list-item-content>
         </v-list-item>
       </v-card>
@@ -57,6 +58,7 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
+import moment from "moment";
 
 import PostService from "../../services/PostService";
 import UserService from "../../services/UserService";
@@ -71,12 +73,15 @@ export default Vue.extend({
   methods: {
     ...mapActions(["fetchPosts", "deletePost"]),
 
-    date() {
-      const date: any = new Date()
-        .toISOString()
-        .slice(0, 19)
-        .replace("T", " ");
-      return date;
+    dateFromNow: function() {
+      return moment();
+    },
+  },
+
+  filters: {
+    dateFromNow: function(createdAt) {
+      moment.locale("fr");
+      return moment(createdAt).fromNow();
     },
   },
 

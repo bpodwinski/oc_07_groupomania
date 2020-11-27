@@ -1,5 +1,5 @@
 <template>
-  <div id="home" class="home">
+  <div id="home" class="home mt-10">
     <PostList msg="PostList" />
     <AddPost />
   </div>
