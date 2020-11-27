@@ -58,7 +58,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment";
 
 import PostService from "../../services/PostService";
 import UserService from "../../services/UserService";
@@ -72,17 +71,6 @@ export default Vue.extend({
 
   methods: {
     ...mapActions(["fetchPosts", "deletePost"]),
-
-    dateFromNow: function() {
-      return moment();
-    },
-  },
-
-  filters: {
-    dateFromNow: function(createdAt) {
-      moment.locale("fr");
-      return moment(createdAt).fromNow();
-    },
   },
 
   mounted() {

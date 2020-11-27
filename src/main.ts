@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
+import "./filter";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
@@ -13,5 +14,5 @@ new Vue({
   store,
   i18n,
   vuetify,
-  render: (h) => h(App),
+  render: h => h(App),
 }).$mount("#app");

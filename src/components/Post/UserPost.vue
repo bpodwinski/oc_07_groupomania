@@ -48,7 +48,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
-import moment from "moment";
 
 import PostService from "../../services/PostService";
 
@@ -69,17 +68,6 @@ export default Vue.extend({
         this.$store.getters.user.userId
       );
       this.post = res.data;
-    },
-
-    dateFromNow: function() {
-      return moment();
-    },
-  },
-
-  filters: {
-    dateFromNow: function(createdAt) {
-      moment.locale("fr");
-      return moment(createdAt).fromNow();
     },
   },
 
