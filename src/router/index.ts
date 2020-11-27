@@ -45,6 +45,12 @@ const routes: Array<RouteConfig> = [
     component: () => import("@/views/Account.vue"),
     beforeEnter: IsAuth,
   },
+  {
+    path: "/account/:id/posts",
+    name: "User Post",
+    component: () => import("@/views/UserPost.vue"),
+    beforeEnter: IsAuth,
+  },
 ];
 
 const router = new VueRouter({
