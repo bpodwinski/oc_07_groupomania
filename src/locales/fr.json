@@ -13,9 +13,11 @@
   "delete": "Supprimer",
   "return": "Retour",
   "send": "Envoyer",
+  "post.my": "Mes messages",
   "post.create": "Créer un message",
   "post.empty": "Il n'y a aucun message !",
   "post.title": "Titre",
   "post.description": "Description",
-  "post.body": "Texte"
+  "post.body": "Texte",
+  "lang": "fr"
 }

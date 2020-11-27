@@ -13,9 +13,11 @@
   "delete": "Delete",
   "return": "Return",
   "send": "Send",
+  "post.my": "My posts",
   "post.create": "Create Post",
   "post.empty": "There is no post!",
   "post.title": "Title",
   "post.description": "Description",
-  "post.body": "Text"
+  "post.body": "Text",
+  "lang": "en"
 }
