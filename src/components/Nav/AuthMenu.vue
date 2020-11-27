@@ -10,7 +10,7 @@
       <v-list>
         <v-list-item
           v-if="user.userId"
-          :to="{ name: 'Account', params: { id: user.userId } }"
+          :to="{ name: 'Profile', params: { id: user.userId } }"
         >
           <v-list-item-title
             ><v-icon left>mdi-account</v-icon>

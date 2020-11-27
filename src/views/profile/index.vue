@@ -94,7 +94,7 @@
 import Vue from "vue";
 import Gravatar from "vue-gravatar";
 import { mapGetters, mapActions } from "vuex";
-import UserService from "../services/UserService";
+import UserService from "../../services/UserService";
 import { required, email, max } from "vee-validate/dist/rules";
 import { extend, ValidationObserver, ValidationProvider } from "vee-validate";
 
