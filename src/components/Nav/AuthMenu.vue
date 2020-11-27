@@ -17,6 +17,14 @@
             {{ $t("profile") }}</v-list-item-title
           >
         </v-list-item>
+
+        <v-list-item v-if="user.userId" :to="{ name: 'User Post' }">
+          <v-list-item-title
+            ><v-icon left>mdi-post</v-icon>
+            {{ $t("post.my") }}</v-list-item-title
+          >
+        </v-list-item>
+
         <v-list-item @click="logout">
           <v-list-item-title
             ><v-icon left>mdi-logout</v-icon>

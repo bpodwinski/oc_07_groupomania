@@ -1,7 +1,7 @@
 import Api from "@/services";
 import store from "@/store";
 
-Api.interceptors.request.use((req) => {
+Api.interceptors.request.use(req => {
   req.headers.authorization = "Bearer " + store.getters.user.token;
   return req;
 });
@@ -9,6 +9,9 @@ Api.interceptors.request.use((req) => {
 export default {
   getPost(): any {
     return Api.get("/post");
+  },
+  getUserPost(id: number): any {
+    return Api.get("/post/user/" + id);
   },
   addPost(data: object) {
     return Api.post("/post", data);
