@@ -16,6 +16,7 @@
           <v-toolbar-title class="title">
             Toto {{ $i18n.locale }}
           </v-toolbar-title>
+
           <v-spacer></v-spacer>
 
           <v-menu bottom left>
