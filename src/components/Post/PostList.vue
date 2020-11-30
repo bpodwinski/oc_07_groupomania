@@ -16,7 +16,6 @@
           <v-toolbar-title class="title">
             Toto {{ $i18n.locale }}
           </v-toolbar-title>
-
           <v-spacer></v-spacer>
 
           <v-menu bottom left>
@@ -81,12 +80,3 @@ export default Vue.extend({
   computed: mapGetters(["allPosts"]),
 });
 </script>
-
-<style lang="scss">
-.overline {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0 15px 5px 0 !important;
-}
-</style>

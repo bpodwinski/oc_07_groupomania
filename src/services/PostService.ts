@@ -7,10 +7,10 @@ Api.interceptors.request.use(req => {
 });
 
 export default {
-  getPost(): any {
+  getPost() {
     return Api.get("/post");
   },
-  getUserPost(id: number): any {
+  getUserPost(id: number) {
     return Api.get("/post/user/" + id);
   },
   addPost(data: object) {

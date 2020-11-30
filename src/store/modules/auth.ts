@@ -1,8 +1,8 @@
 import UserService from "@/services/UserService";
 import { Module } from "vuex";
 
-import router from "../router/index";
-import AuthService from "../services/AuthService";
+import router from "../../router/index";
+import AuthService from "../../services/AuthService";
 
 const authModule: Module<any, any> = {
   state: {

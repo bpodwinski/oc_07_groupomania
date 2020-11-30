@@ -17,7 +17,7 @@
             <v-btn
               color="indigo lighten-2 white--text"
               type="submit"
-              @click="submit(userID, title, description, text)"
+              @click="sendPost(userID, title, description, text)"
               >{{ $t("send") }}</v-btn
             >
           </v-col>
@@ -28,30 +28,37 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { mapActions } from "vuex";
+import { Component, Vue } from "vue-property-decorator";
+import { namespace } from "vuex-class";
 
-export default Vue.extend({
-  name: "AddPost",
+const post = namespace("post");
 
-  data() {
-    return {
-      userID: this.$store.getters["user"].userId,
-      title: null,
-      description: null,
-      text: null,
-    };
-  },
+@Component
+export default class AddPost extends Vue {
+  // datas
+  private userID: number = this.$store.getters["user"].userId;
+  private data: object = {
+    title: "",
+    description: "",
+    text: "",
+  };
 
-  methods: {
-    ...mapActions(["addPost"]),
-    submit(userID: any, title: any, description: any, text: any) {
-      this.addPost({ userID, title, description, text }).then(() => {
-        this.title = null;
-        this.description = null;
-        this.text = null;
-      });
-    },
-  },
-});
+  // map actions
+  @post.Action
+  public addPost!: any;
+
+  // methods
+  public sendPost(
+    userID: number,
+    title: string,
+    description: string,
+    text: string
+  ): void {
+    this.addPost({ userID, title, description, text }).then(() => {
+      title = "";
+      description = "";
+      text = "";
+    });
+  }
+}
 </script>

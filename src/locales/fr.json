@@ -19,5 +19,6 @@
   "post.title": "Titre",
   "post.description": "Description",
   "post.body": "Texte",
+  "comment.create": "Ecrire un commentaire ...",
   "lang": "fr"
 }

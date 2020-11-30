@@ -2,15 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 // import modules
-import auth from "./auth";
-import post from "./post";
+import Auth from "./modules/auth";
+import Post from "./modules/post_type";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    auth,
-    post,
+    Auth,
+    post: Post,
   },
 
   getters: {

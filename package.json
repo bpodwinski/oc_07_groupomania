@@ -29,7 +29,8 @@
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.4.9",
     "vuetify": "^2.3.18",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
@@ -55,7 +56,8 @@
     "typescript": "~3.9.3",
     "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-loader": "^15.9.5",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.12",
+    "vuex-class": "^0.3.2"
   },
   "eslintConfig": {
     "root": true,

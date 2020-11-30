@@ -1,7 +1,6 @@
 <template>
   <div id="home" class="home mt-10">
-    <PostList msg="PostList" />
-    <AddPost />
+    <PostList class="post-list" />
   </div>
 </template>
 
@@ -14,7 +13,6 @@ export default {
 
   components: {
     PostList,
-    AddPost,
   },
 };
 </script>
