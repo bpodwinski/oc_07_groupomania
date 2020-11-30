@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_VER=1.2.0
+API_VER=1.3.0
 
 rm -fr api/ && \
 mkdir api/ && \
