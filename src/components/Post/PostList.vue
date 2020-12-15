@@ -113,7 +113,6 @@
       </transition>
       <!-- ******** LOADMORE TRANSITION END ******** -->
     </template>
-
     <!-- ******** NO POSTS START ******** -->
     <template v-else>
       <v-alert color="yellow darken-3" outlined prominent text type="info">
@@ -168,6 +167,10 @@ export default class PostList extends Vue {
   }
 
   async mounted() {
+    if (window.innerHeight == document.body.offsetHeight) {
+      await this.getPosts(0);
+    }
+
     await addEventListener("scroll", e => {
       if (
         window.innerHeight + window.pageYOffset >=
@@ -176,8 +179,6 @@ export default class PostList extends Vue {
         return this.loadMore();
       }
     });
-
-    await this.getPosts(0);
   }
 }
 </script>
