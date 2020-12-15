@@ -1,23 +1,13 @@
 <template>
   <div class="mt-5 mb-15">
     <template v-if="posts.length">
-      <transition name="fade">
-        <div v-show="loadmore" class="loadmore text-center">
-          <v-progress-circular
-            indeterminate
-            :size="50"
-            :width="8"
-            color="primary"
-          ></v-progress-circular>
-        </div>
-      </transition>
-
       <v-card
         v-for="(post, index) in posts"
         :key="index"
         class="mx-auto mb-10"
         elevation="3"
       >
+        <!-- ******** TITLE POST START ******** -->
         <v-app-bar flat>
           <v-toolbar-title class="title">
             id: {{ post.id }} - {{ post.user.firstname }}
@@ -51,15 +41,20 @@
             </v-list>
           </v-menu>
         </v-app-bar>
+        <!-- ******** TITLE POST END ******** -->
 
+        <!-- ******** POST CONTENT START ******** -->
         <v-card-title> {{ post.title }} </v-card-title>
 
         <v-card-text>
           {{ post.content }}
         </v-card-text>
+        <!-- ******** POST CONTENT END ******** -->
 
+        <!-- ******** COMMENTS START ******** -->
         <v-card-actions>
           <v-container>
+            <!-- add comment form -->
             <v-form>
               <v-text-field
                 v-model="commentcontent"
@@ -67,9 +62,11 @@
                 filled
                 type="text"
                 :label="$t('comment.create')"
-                @click:append="submitComment(commentcontent)"
+                @click:append="submitComment(post.id, commentcontent)"
               ></v-text-field>
             </v-form>
+
+            <!-- comments list -->
             <v-expansion-panels flat>
               <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -100,13 +97,30 @@
             </v-expansion-panels>
           </v-container>
         </v-card-actions>
+        <!-- ******** COMMENTS END ******** -->
       </v-card>
+
+      <!-- ******** LOADMORE TRANSITION START ******** -->
+      <transition name="fade">
+        <div v-show="loadmore" class="loadmore text-center">
+          <v-progress-circular
+            indeterminate
+            :size="50"
+            :width="8"
+            color="primary"
+          ></v-progress-circular>
+        </div>
+      </transition>
+      <!-- ******** LOADMORE TRANSITION END ******** -->
     </template>
+
+    <!-- ******** NO POSTS START ******** -->
     <template v-else>
       <v-alert color="yellow darken-3" outlined prominent text type="info">
         {{ $t("post.empty") }}
       </v-alert>
     </template>
+    <!-- ******** NO POSTS END ******** -->
   </div>
 </template>
 
@@ -121,7 +135,6 @@ const comment = namespace("comment");
 export default class PostList extends Vue {
   private loadmore = false;
   private page = 1;
-  private userID: number = this.$store.getters["user"].userId;
   private commentcontent = "";
 
   @post.Getter
@@ -145,10 +158,10 @@ export default class PostList extends Vue {
     }, 1000);
   }
 
-  public submitComment(commentcontent: string): void {
+  public submitComment(postId: number, commentcontent: string): void {
     const comment = {
       userId: this.$store.state.login.credentials.userId,
-      postId: 20,
+      postId: postId,
       content: commentcontent,
     };
     this.addComment(comment);
