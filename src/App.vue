@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import SwitchLanguage from "./components/SwitchLanguage.vue";
+import SwitchLanguage from "./components/Language/SwitchLanguage.vue";
 import AuthMenu from "./components/Nav/AuthMenu.vue";
 import { mapActions } from "vuex";
 
