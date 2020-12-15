@@ -1,25 +1,61 @@
-import { Module } from "vuex";
-import PostService from "../../services/PostService";
+import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
+import PostService from "@/services/PostService";
 
-const postModule: Module<any, any> = {
-  state: {
-    posts: [],
-  },
+@Module({ namespaced: true })
+export default class Post extends VuexModule {
+  // state
+  public postsData: Array<object> = [];
 
-  getters: {
-    allPosts: state => state.posts,
-  },
+  // getters
+  get posts() {
+    return this.postsData;
+  }
 
-  actions: {
-    async fetchPosts({ commit }) {
-      const res: any = await PostService.getPost();
-      commit("setPosts", res.data);
-    },
-  },
+  @Action({ rawError: true })
+  async getPosts(page: number): Promise<void | any> {
+    const response = await PostService.getPost(page);
+    const data: Array<object> = response.data.posts;
 
-  mutations: {
-    setPosts: (state, posts: any) => (state.posts = posts),
-  },
-};
+    return this.context.commit("setPosts", data);
+  }
 
-export default postModule;
+  @Action({ rawError: true })
+  async addPost(post: object): Promise<void | any> {
+    const response: any = await PostService.addPost(post);
+    const data: object = response.data;
+
+    return this.context.commit("newPost", data);
+  }
+
+  @Action({ rawError: true })
+  async deletePost(id: number): Promise<void | any> {
+    await PostService.deletePost(id);
+
+    return this.context.commit("removePost", id);
+  }
+
+  @Mutation
+  setPosts(posts: Array<object>) {
+    this.postsData = this.postsData.concat(posts);
+  }
+
+  @Mutation
+  newPost(post: object) {
+    this.postsData.unshift(post);
+  }
+
+  @Mutation
+  removePost(id: number) {
+    this.postsData = this.postsData.filter(post => post.id !== id);
+  }
+
+  @Mutation
+  newComment(post: object) {
+    for (let i = 0; i < this.postsData.length; i++) {
+      if (this.postsData[i].id === post.postId) {
+        const comments = this.postsData[i].comments;
+        return comments.unshift(post);
+      }
+    }
+  }
+}

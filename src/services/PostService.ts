@@ -7,8 +7,11 @@ Api.interceptors.request.use(req => {
 });
 
 export default {
-  getPost() {
-    return Api.get("/post");
+  getPost(page: number) {
+    return Api.get("/post/" + page);
+  },
+  getPostComment(id: number) {
+    return Api.get("/post/" + id + "/comment");
   },
   getUserPost(id: number) {
     return Api.get("/post/user/" + id);

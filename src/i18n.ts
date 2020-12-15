@@ -11,7 +11,7 @@ function loadLocaleMessages() {
     /[A-Za-z0-9-_,\s]+\.json$/i
   );
 
-  locales.keys().forEach((key) => {
+  locales.keys().forEach(key => {
     const matched: any = key.match(/([A-Za-z0-9-_]+)\./i);
 
     if (matched && matched.length > 1) {

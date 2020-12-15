@@ -94,26 +94,10 @@
 import Vue from "vue";
 import Gravatar from "vue-gravatar";
 import { mapGetters, mapActions } from "vuex";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 import UserService from "../../services/UserService";
-import { required, email, max } from "vee-validate/dist/rules";
-import { extend, ValidationObserver, ValidationProvider } from "vee-validate";
 
 Vue.component("v-gravatar", Gravatar);
-
-extend("required", {
-  ...required,
-  message: "Ne peux pas être vide",
-});
-
-extend("max", {
-  ...max,
-  message: "Ne doit pas dépasser {length} caractères",
-});
-
-extend("email", {
-  ...email,
-  message: "L'email doit être valide",
-});
 
 export default Vue.extend({
   name: "Account",

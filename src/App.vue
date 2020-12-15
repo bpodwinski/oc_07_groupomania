@@ -26,7 +26,9 @@
 
     <v-main>
       <v-container class="main-container">
-        <router-view />
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
       </v-container>
     </v-main>
   </v-app>
@@ -34,9 +36,9 @@
 
 <script lang="ts">
 import Vue from "vue";
-import SwitchLanguage from "@/components/SwitchLanguage.vue";
-import AuthMenu from "@/components/Nav/AuthMenu.vue";
-import { mapGetters, mapActions } from "vuex";
+import SwitchLanguage from "./components/SwitchLanguage.vue";
+import AuthMenu from "./components/Nav/AuthMenu.vue";
+import { mapActions } from "vuex";
 
 export default Vue.extend({
   name: "App",
@@ -52,11 +54,9 @@ export default Vue.extend({
       group: null,
     };
   },
+
   methods: {
     ...mapActions(["Logout"]),
-  },
-  computed: {
-    ...mapGetters(["user"]),
   },
 });
 </script>
@@ -64,5 +64,35 @@ export default Vue.extend({
 <style lang="scss">
 .main-container {
   max-width: 980px !important;
+}
+
+.preloader-fade-enter-active,
+.preloader-fade-leave-active {
+  transition: opacity 0.5s;
+  transition-delay: 2s;
+}
+
+.preloader-fade-enter,
+.preloader-fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity, transform 0.5s;
+  transition-delay: 2s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter {
+  transform: translateY(2%);
+}
+
+.fade-leave-to {
+  transform: translateY(0);
 }
 </style>

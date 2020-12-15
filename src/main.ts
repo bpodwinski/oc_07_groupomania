@@ -1,11 +1,12 @@
 import Vue from "vue";
-import App from "./App.vue";
-import "./registerServiceWorker";
-import "./filters";
-import router from "./router";
-import store from "./store";
-import vuetify from "./plugins/vuetify";
-import i18n from "./i18n";
+import App from "@/App.vue";
+import i18n from "@/i18n";
+import "@/registerServiceWorker";
+import "@/filters";
+import "@/vee-validate";
+import router from "@/router";
+import store from "@/store";
+import vuetify from "@/plugins/vuetify";
 
 Vue.config.productionTip = false;
 

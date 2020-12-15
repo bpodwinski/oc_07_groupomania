@@ -7,6 +7,9 @@
   "password": "Mot de passe",
   "confirmPassword": "Confirmer le mot de passe",
   "login": "Se connecter",
+  "login.success": "Connecté avec succès",
+  "login.error.usernotfound": "E-mail non trouvé",
+  "login.error.badpassword": "Mauvais mot de passe",
   "logout": "Déconnexion",
   "profile": "Mon profil",
   "update": "Mettre à jour",
@@ -19,6 +22,14 @@
   "post.title": "Titre",
   "post.description": "Description",
   "post.body": "Texte",
-  "comment.create": "Ecrire un commentaire ...",
-  "lang": "fr"
+  "comment": {
+    "title": "Commentaires",
+    "create": "Ecrire un commentaire ..."
+  },
+  "validation": {
+    "required": "Ne peux pas être vide",
+    "email": "L'email doit être valide",
+    "min": "Doit avoir au moins {length} caractères",
+    "max": "Ne doit pas dépasser {length} caractères"
+  }
 }
