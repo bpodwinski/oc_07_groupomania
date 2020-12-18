@@ -1,7 +1,7 @@
 <template>
   <div id="home" class="home mt-10">
-    <AddPost class="post-add" />
-    <PostList class="post-list" />
+    <AddPost />
+    <PostList />
   </div>
 </template>
 

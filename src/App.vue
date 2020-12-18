@@ -35,30 +35,20 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue } from "vue-property-decorator";
 import SwitchLanguage from "./components/Language/SwitchLanguage.vue";
 import AuthMenu from "./components/Nav/AuthMenu.vue";
-import { mapActions } from "vuex";
 
-export default Vue.extend({
-  name: "App",
-
+@Component({
   components: {
     SwitchLanguage,
     AuthMenu,
   },
-
-  data() {
-    return {
-      drawer: false,
-      group: null,
-    };
-  },
-
-  methods: {
-    ...mapActions(["Logout"]),
-  },
-});
+})
+export default class App extends Vue {
+  private drawer = false;
+  private group = null;
+}
 </script>
 
 <style lang="scss">

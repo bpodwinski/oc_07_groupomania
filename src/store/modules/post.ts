@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import PostService from "@/services/PostService";
+import PostService from "../../services/PostService";
 
 @Module({ namespaced: true })
 export default class Post extends VuexModule {

@@ -11,7 +11,7 @@ const Api = axios.create({
   },
 });
 
-// Error handling
+// Put token to Axios requests
 Api.interceptors.request.use(
   config => {
     const token = sessionStorage.getItem("token");
@@ -25,7 +25,7 @@ Api.interceptors.request.use(
   }
 );
 
-// Add a response interceptor
+// Error handling
 Api.interceptors.response.use(
   response => {
     return response;
