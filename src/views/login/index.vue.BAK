@@ -7,12 +7,12 @@
             <v-toolbar-title>{{ $t("login") }}</v-toolbar-title>
           </v-app-bar>
 
-          <ValidationObserver ref="loginForm" v-slot="{ invalid }">
+          <validation-observer ref="loginForm" v-slot="{ invalid }">
             <v-form @submit.prevent="loginRequest">
               <v-container>
                 <v-row>
                   <v-col cols="12">
-                    <ValidationProvider
+                    <validation-provider
                       v-slot="{ errors }"
                       rules="required|email|max:128"
                     >
@@ -24,10 +24,10 @@
                         :label="$t('email')"
                         required
                       ></v-text-field>
-                    </ValidationProvider>
+                    </validation-provider>
                   </v-col>
                   <v-col cols="12">
-                    <ValidationProvider
+                    <validation-provider
                       v-slot="{ errors }"
                       rules="required|min:6|max:128"
                     >
@@ -40,7 +40,7 @@
                         :label="$t('password')"
                         required
                       ></v-text-field>
-                    </ValidationProvider>
+                    </validation-provider>
                   </v-col>
                 </v-row>
 
@@ -71,20 +71,20 @@
                 </v-card-actions>
               </v-container>
             </v-form>
-          </ValidationObserver>
+          </validation-observer>
         </v-card>
       </v-col>
       <v-col cols="12">
         <v-alert
           type="error"
-          v-show="alert"
+          v-model="alert"
           transition="slide-x-transition"
           text
         >
-          <template v-if="loginerror.error === 1">
+          <template v-if="loginError.error === 1">
             {{ $t("login.error.usernotfound") }}
           </template>
-          <template v-if="loginerror.error === 2">
+          <template v-if="loginError.error === 2">
             {{ $t("login.error.badpassword") }}
           </template>
         </v-alert>
@@ -94,52 +94,55 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { State, Action, namespace } from "vuex-class";
+import Vue from "vue";
+import { mapActions, mapState } from "vuex";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
-const login = namespace("login");
-const account = namespace("account");
+export default Vue.extend({
+  name: "Login",
 
-@Component({
   components: {
     ValidationProvider,
     ValidationObserver,
   },
-})
-export default class Login extends Vue {
-  // datas
-  private valid = false;
-  private loading = false;
-  private email = "";
-  private password = "";
-  @State(state => state.login.logged) logged: boolean;
-  @State(state => state.login.alert) alert: boolean;
-  @State(state => state.login.credentials) credentials: object;
-  @State(state => state.login.loginerror) loginerror: object;
 
-  @login.Action
-  private Login!: (credentials: object) => Promise<void | any>;
+  data() {
+    return {
+      valid: false,
+      loading: false,
+      email: null,
+      password: null,
+    };
+  },
 
-  @account.Action
-  private getUser!: (id: number) => Promise<void | any>;
+  computed: {
+    ...mapState({
+      logged: state => state.login.logged,
+      credentials: state => state.login.credentials,
+      alert: state => state.login.alert,
+      loginError: state => state.login.loginError,
+    }),
+  },
 
-  // methods
-  public async loginRequest() {
-    this.loading = true;
-    //this.$refs.loginForm.validate();
-    await new Promise(sleep => setTimeout(sleep, 1000));
+  methods: {
+    ...mapActions(["Login", "getUser"]),
 
-    await this.Login({
-      email: this.email,
-      password: this.password,
-    });
+    async loginRequest() {
+      this.loading = true;
+      this.$refs.loginForm.validate();
+      await new Promise(sleep => setTimeout(sleep, 1000));
 
-    await this.getUser(this.credentials.userId);
+      await this.Login({
+        email: this.email,
+        password: this.password,
+      });
 
-    this.loading = false;
-  }
-}
+      await this.getUser(this.credentials.userId);
+
+      this.loading = false;
+    },
+  },
+});
 </script>
 
 <style lang="scss">

@@ -4,12 +4,7 @@ import PostService from "@/services/PostService";
 @Module({ namespaced: true })
 export default class Post extends VuexModule {
   // state
-  public postsData: Array<object> = [];
-
-  // getters
-  get posts() {
-    return this.postsData;
-  }
+  public posts: Array<object> = [];
 
   @Action({ rawError: true })
   async getPosts(page: number): Promise<void | any> {
@@ -36,24 +31,24 @@ export default class Post extends VuexModule {
 
   @Mutation
   setPosts(posts: Array<object>) {
-    this.postsData = this.postsData.concat(posts);
+    this.posts = this.posts.concat(posts);
   }
 
   @Mutation
   newPost(post: object) {
-    this.postsData.unshift(post);
+    this.posts.unshift(post);
   }
 
   @Mutation
   removePost(id: number) {
-    this.postsData = this.postsData.filter(post => post.id !== id);
+    this.posts = this.posts.filter(post => post.id !== id);
   }
 
   @Mutation
   newComment(post: object) {
-    for (let i = 0; i < this.postsData.length; i++) {
-      if (this.postsData[i].id === post.postId) {
-        const comments = this.postsData[i].comments;
+    for (let i = 0; i < this.posts.length; i++) {
+      if (this.posts[i].id === post.postId) {
+        const comments = this.posts[i].comments;
         return comments.unshift(post);
       }
     }

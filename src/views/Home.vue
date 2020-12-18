@@ -6,15 +6,15 @@
 </template>
 
 <script>
+import { Component, Vue } from "vue-property-decorator";
 import PostList from "../components/Post/PostList.vue";
 import AddPost from "../components/Post/AddPost.vue";
 
-export default {
-  name: "Home",
-
+@Component({
   components: {
     PostList,
     AddPost,
   },
-};
+})
+export default class Home extends Vue {}
 </script>

@@ -6,14 +6,17 @@
         <v-row>
           <v-col cols="12">
             <v-text-field
-              v-model="title"
+              v-model="data.title"
               :label="$t('post.title')"
             ></v-text-field>
-            <v-textarea v-model="content" :label="$t('post.body')"></v-textarea>
+            <v-textarea
+              v-model="data.content"
+              :label="$t('post.body')"
+            ></v-textarea>
             <v-btn
               color="indigo lighten-2 white--text"
               type="submit"
-              @click="sendPost(title, content)"
+              @click="sendPost()"
               >{{ $t("send") }}</v-btn
             >
           </v-col>
@@ -32,7 +35,7 @@ const post = namespace("post");
 @Component
 export default class AddPost extends Vue {
   // data
-  private data: object = {
+  private data: any = {
     title: "",
     content: "",
   };
@@ -42,11 +45,11 @@ export default class AddPost extends Vue {
   private addPost!: (post: object) => Promise<void | any>;
 
   // methods
-  public sendPost(title: string, content: string): void {
+  public sendPost(): void {
     const post = {
       userId: this.$store.state.login.credentials.userId,
-      title: title,
-      content: content,
+      title: this.data.title,
+      content: this.data.content,
     };
     this.addPost(post);
   }

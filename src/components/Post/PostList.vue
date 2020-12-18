@@ -57,12 +57,12 @@
             <!-- add comment form -->
             <v-form>
               <v-text-field
-                v-model="commentcontent"
+                v-model="commentcontent[index]"
                 append-icon="mdi-send"
                 filled
                 type="text"
                 :label="$t('comment.create')"
-                @click:append="submitComment(post.id, commentcontent)"
+                @click:append="submitComment(post.id, commentcontent[index])"
               ></v-text-field>
             </v-form>
 
@@ -133,10 +133,10 @@ const comment = namespace("comment");
 @Component
 export default class PostList extends Vue {
   private loadmore = false;
-  private page = 1;
-  private commentcontent = "";
+  private page = 0;
+  private commentcontent: any = {};
 
-  @post.Getter
+  @post.State
   private posts!: [];
 
   @post.Action
@@ -152,7 +152,11 @@ export default class PostList extends Vue {
     this.loadmore = true;
 
     setTimeout(e => {
-      this.getPosts(this.page++);
+      for (this.page; this.page < 20; ++this.page) {
+        if (this.page % 5 === 0) {
+          this.getPosts(this.page++);
+        }
+      }
       this.loadmore = false;
     }, 1000);
   }
@@ -168,7 +172,7 @@ export default class PostList extends Vue {
 
   async mounted() {
     if (window.innerHeight == document.body.offsetHeight) {
-      await this.getPosts(0);
+      await this.getPosts(5);
     }
 
     await addEventListener("scroll", e => {
