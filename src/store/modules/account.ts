@@ -1,10 +1,10 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import UserService from "@/services/UserService";
+import UserService from "../../services/UserService";
 
 @Module({ namespaced: true })
 export default class Account extends VuexModule {
   // state
-  public userData: object = {};
+  public data: object = {};
 
   @Action({ rawError: true })
   async getUser(id: number): Promise<void | any> {
@@ -15,6 +15,6 @@ export default class Account extends VuexModule {
 
   @Mutation
   getUserSuccess(data: object) {
-    this.userData = data;
+    this.data = data;
   }
 }

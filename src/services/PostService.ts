@@ -1,10 +1,4 @@
-import Api from "@/services";
-import store from "@/store";
-
-Api.interceptors.request.use(req => {
-  req.headers.authorization = "Bearer " + store.getters.user.token;
-  return req;
-});
+import Api from "./index";
 
 export default {
   getPost(page: number) {
