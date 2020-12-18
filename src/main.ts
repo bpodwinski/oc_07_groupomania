@@ -12,18 +12,21 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 Vue.config.productionTip = false;
 
 // Decode token if exist and retrieve user session
-const token = sessionStorage.getItem("token");
+try {
+  const token = sessionStorage.getItem("token");
+  if (token) {
+    const decodedToken = jwtDecode<JwtPayload>(token);
+    if (decodedToken.exp! * 1000 >= Date.now()) {
+      const userId: number = decodedToken.userId;
 
-if (token) {
-  const decodedToken = jwtDecode<JwtPayload>(token);
-  if (decodedToken.exp! * 1000 >= Date.now()) {
-    const userId: number = decodedToken.userId;
-
-    store.dispatch("login/authUser", { decodedToken, token });
-    store.dispatch("account/getUser", userId);
-  } else if (decodedToken.exp! * 1000 < Date.now()) {
-    store.dispatch("login/Logout");
+      store.dispatch("login/authUser", { decodedToken, token });
+      store.dispatch("account/getUser", userId);
+    } else if (decodedToken.exp! * 1000 < Date.now()) {
+      store.dispatch("login/Logout");
+    }
   }
+} catch (error) {
+  store.dispatch("login/Logout");
 }
 
 new Vue({

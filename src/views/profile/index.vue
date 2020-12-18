@@ -9,8 +9,12 @@
       <v-form @submit.prevent="submit" class="px-5 py-2">
         <v-container>
           <v-row>
-            <v-col cols="12" class="d-flex justify-center"
-              ><v-gravatar :email="user.email" alt="Avatar" :size="150" />
+            <v-col cols="12" class="d-flex justify-center">
+              <v-gravatar
+                :email="account.data.email"
+                alt="Avatar"
+                :size="150"
+              />
             </v-col>
             <v-col cols="12">
               <validation-provider
@@ -22,7 +26,7 @@
                   :error-messages="errors"
                   :counter="128"
                   label="First name"
-                  v-model="user.firstname"
+                  v-model="account.data.firstname"
                   required
                 ></v-text-field>
               </validation-provider>
@@ -37,7 +41,7 @@
                   :error-messages="errors"
                   :counter="128"
                   label="Last name"
-                  v-model="user.lastname"
+                  v-model="account.data.lastname"
                   required
                 ></v-text-field>
               </validation-provider>
@@ -52,7 +56,7 @@
                   :error-messages="errors"
                   :counter="128"
                   label="E-mail"
-                  v-model="user.email"
+                  v-model="account.data.email"
                   required
                 ></v-text-field>
               </validation-provider>
@@ -67,7 +71,7 @@
                   :error-messages="errors"
                   :counter="128"
                   label="Service"
-                  v-model="user.service"
+                  v-model="account.data.service"
                   required
                 ></v-text-field>
               </validation-provider>
@@ -91,44 +95,23 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { Component, Vue } from "vue-property-decorator";
+import { State, Action, namespace } from "vuex-class";
 import Gravatar from "vue-gravatar";
-import { mapGetters, mapActions } from "vuex";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import UserService from "../../services/UserService";
 
+const account = namespace("account");
+
 Vue.component("v-gravatar", Gravatar);
 
-export default Vue.extend({
-  name: "Account",
-
+@Component({
   components: {
     ValidationProvider,
     ValidationObserver,
   },
-
-  data() {
-    return {
-      user: {},
-    };
-  },
-
-  methods: {
-    // get user datas
-    async getUser() {
-      const res: any = await UserService.getUser(this.$route.params.id);
-      this.user = res.data;
-    },
-
-    // submit valid user informations
-    submit() {
-      this.$refs.userForm.validate();
-      UserService.updateUser(this.$route.params.id, this.user);
-    },
-  },
-
-  created() {
-    this.getUser();
-  },
-});
+})
+export default class Account extends Vue {
+  @State account;
+}
 </script>

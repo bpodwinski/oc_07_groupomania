@@ -129,59 +129,54 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { mapActions, mapState } from "vuex";
+import { Component, Vue } from "vue-property-decorator";
+import { State, Action, namespace } from "vuex-class";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 
-export default Vue.extend({
-  name: "Register",
+const register = namespace("register");
+const login = namespace("login");
 
+@Component({
   components: {
     ValidationProvider,
     ValidationObserver,
   },
+})
+export default class Register extends Vue {
+  private valid = true;
+  private email = null;
+  private firstname = null;
+  private lastname = null;
+  private service = null;
+  private password = null;
+  private confirmPassword = null;
+  @State(state => state.register.success) success: boolean;
 
-  data() {
-    return {
-      valid: true,
-      email: null,
-      firstname: null,
-      lastname: null,
-      service: null,
-      password: null,
-      confirmPassword: null,
-    };
-  },
+  @register.Action
+  private Register!: (data: object) => Promise<void | any>;
 
-  computed: {
-    ...mapState({
-      success: state => state.register.success,
-    }),
-  },
+  @login.Action
+  private Login!: (credentials: object) => Promise<void | any>;
 
-  methods: {
-    ...mapActions(["Register", "Login"]),
+  public async register() {
+    //this.$refs.form.validate();
 
-    async register() {
-      this.$refs.form.validate();
+    await this.Register({
+      firstname: this.firstname,
+      lastname: this.lastname,
+      service: this.service,
+      email: this.email,
+      password: this.password,
+    });
 
-      await this.Register({
-        firstname: this.firstname,
-        lastname: this.lastname,
-        service: this.service,
+    if (this.success === true) {
+      await this.Login({
         email: this.email,
         password: this.password,
       });
-
-      if (this.success === true) {
-        await this.Login({
-          email: this.email,
-          password: this.password,
-        });
-      }
-    },
-  },
-});
+    }
+  }
+}
 </script>
 
 <style lang="scss">

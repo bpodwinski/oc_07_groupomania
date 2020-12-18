@@ -1,12 +1,12 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators";
-import AuthService from "@/services/AuthService";
+import AuthService from "../../services/AuthService";
 
-@Module
+@Module({ namespaced: true })
 export default class Register extends VuexModule {
   // state
   public success = false;
 
-  @Action
+  @Action({ rawError: true })
   async Register(data: object) {
     const response = await AuthService.Register(data);
 

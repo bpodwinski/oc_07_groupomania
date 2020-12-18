@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "../router";
+import store from "../store";
 
 // Call axios instance into variable
 const Api = axios.create({
@@ -35,23 +36,23 @@ Api.interceptors.response.use(
       switch (error.response.status) {
         case 400:
           console.log(error.response.data.message);
-          router.push("Login");
+          store.dispatch("login/Logout");
           break;
         case 401:
           console.log(error.response.data.message);
-          router.push("Login");
+          store.dispatch("login/Logout");
           break;
         case 403:
           console.log(error.response.data.message);
-          router.push("Login");
+          store.dispatch("login/Logout");
           break;
         case 404:
           console.log(error.response.data.message);
-          router.push("Login");
+          store.dispatch("login/Logout");
           break;
         case 500:
           console.log(error.response.data.message);
-          router.push("Login");
+          store.dispatch("login/Logout");
       }
     }
   }

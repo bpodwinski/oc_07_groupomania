@@ -11,12 +11,12 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: "SwitchLocale",
-  data() {
-    return { langs: ["en", "fr"] };
-  },
-};
+import { Component, Vue } from "vue-property-decorator";
+
+@Component
+export default class SwitchLocale extends Vue {
+  private langs: string[] = ["en", "fr"];
+}
 </script>
 
 <style lang="scss">

@@ -34,19 +34,16 @@ const post = namespace("post");
 
 @Component
 export default class AddPost extends Vue {
-  // data
   private data: any = {
     title: "",
     content: "",
   };
 
-  // map action
   @post.Action
   private addPost!: (post: object) => Promise<void | any>;
 
-  // methods
   public sendPost(): void {
-    const post = {
+    const post: object = {
       userId: this.$store.state.login.credentials.userId,
       title: this.data.title,
       content: this.data.content,

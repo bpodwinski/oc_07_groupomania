@@ -1,16 +1,16 @@
 <template>
-  <div v-if="user.userId">
+  <div v-if="logged">
     <v-menu bottom offset-y>
       <template v-slot:activator="{ attrs, on }">
         <v-btn text v-bind="attrs" v-on="on">
-          <v-gravatar :mail="user.email" alt="Avatar" :size="30" />
+          <v-gravatar :mail="account.data.email" alt="Avatar" :size="30" />
         </v-btn>
       </template>
 
       <v-list>
         <v-list-item
-          v-if="user.userId"
-          :to="{ name: 'Profile', params: { id: user.userId } }"
+          v-if="account.data.id"
+          :to="{ name: 'Profile', params: { id: account.data.id } }"
         >
           <v-list-item-title
             ><v-icon left>mdi-account</v-icon>
@@ -36,23 +36,24 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { Component, Vue } from "vue-property-decorator";
+import { namespace, State } from "vuex-class";
 import Gravatar from "vue-gravatar";
 
+const login = namespace("login");
+const account = namespace("account");
 Vue.component("v-gravatar", Gravatar);
 
-export default {
-  name: "AuthMenu",
+@Component
+export default class AuthMenu extends Vue {
+  @State account;
+  @State(state => state.login.logged) logged: boolean;
 
-  methods: {
-    ...mapActions(["Logout"]),
+  @login.Action
+  private Logout!: () => Promise<void | any>;
 
-    logout() {
-      this.Logout();
-    },
-  },
-
-  computed: mapGetters(["user"]),
-};
+  public logout() {
+    this.Logout();
+  }
+}
 </script>

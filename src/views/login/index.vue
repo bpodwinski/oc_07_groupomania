@@ -48,7 +48,7 @@
                   <transition name="fade" mode="out-in">
                     <v-btn
                       key="login-success"
-                      v-if="logged"
+                      v-if="login.logged"
                       depressed
                       color="success white--text"
                       ><v-icon dark left>
@@ -77,14 +77,14 @@
       <v-col cols="12">
         <v-alert
           type="error"
-          v-show="alert"
+          v-show="login.alert"
           transition="slide-x-transition"
           text
         >
-          <template v-if="loginerror.error === 1">
+          <template v-if="login.error.type === 1">
             {{ $t("login.error.usernotfound") }}
           </template>
-          <template v-if="loginerror.error === 2">
+          <template v-if="login.error.type === 2">
             {{ $t("login.error.badpassword") }}
           </template>
         </v-alert>
@@ -108,23 +108,15 @@ const account = namespace("account");
   },
 })
 export default class Login extends Vue {
-  // datas
   private valid = false;
   private loading = false;
   private email = "";
   private password = "";
-  @State(state => state.login.logged) logged: boolean;
-  @State(state => state.login.alert) alert: boolean;
-  @State(state => state.login.credentials) credentials: object;
-  @State(state => state.login.loginError) loginerror: object;
+  @State login;
 
   @login.Action
   private Login!: (credentials: object) => Promise<void | any>;
 
-  @account.Action
-  private getUser!: (id: number) => Promise<void | any>;
-
-  // methods
   public async loginRequest() {
     this.loading = true;
     //this.$refs.loginForm.validate(); // TODO: Fix vue validate in TS
@@ -134,8 +126,6 @@ export default class Login extends Vue {
       email: this.email,
       password: this.password,
     });
-
-    await this.getUser(this.credentials.userId);
 
     this.loading = false;
   }

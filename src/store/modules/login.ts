@@ -13,7 +13,7 @@ export default class Login extends VuexModule {
   public token: CredentialsEntity["token"] =
     sessionStorage.getItem("token") || "";
   public userId: CredentialsEntity["userId"];
-  public loginError: object = {};
+  public error: object = {};
   public logged = false;
   public alert = false;
 
@@ -21,18 +21,18 @@ export default class Login extends VuexModule {
   async Login(credentials: object): Promise<void | any> {
     const response = await AuthService.Login(credentials);
 
-    if (response.data.error === 0) {
+    if (response.data.type === 0) {
       const token = response.data.token;
       const userId = response.data.userId;
-
       sessionStorage.setItem("token", token);
 
       this.context.commit("loginSuccess", { userId, token });
-      await new Promise(sleep => setTimeout(sleep, 1000));
+      this.context.dispatch("account/getUser", userId, { root: true });
 
+      await new Promise(sleep => setTimeout(sleep, 1000));
       return router.push({ name: "Home" });
     } else {
-      return this.context.commit("loginStop", response.data);
+      return this.context.commit("loginError", response.data);
     }
   }
 
@@ -48,7 +48,8 @@ export default class Login extends VuexModule {
   async Logout(): Promise<void | any> {
     sessionStorage.removeItem("token");
 
-    return this.context.commit("logoutSuccess");
+    this.context.commit("logoutSuccess");
+    return router.push({ name: "Login" });
   }
 
   @Mutation
@@ -59,8 +60,8 @@ export default class Login extends VuexModule {
   }
 
   @Mutation
-  loginStop(data: object) {
-    this.loginError = data;
+  loginError(data: object) {
+    this.error = data;
     this.alert = true;
   }
 
