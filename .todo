@@ -3,3 +3,4 @@ Todos:
 ☐ Separate the request post/comment in postlist component
 ☐ Create a error handling
 ✔ refactor the code with TS class and decorator @done(20-12-18 18:16)
+✔ Rework infinite loader for the posts component @done(20-12-20 22:25)

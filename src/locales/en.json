@@ -16,12 +16,15 @@
   "delete": "Delete",
   "return": "Return",
   "send": "Send",
-  "post.my": "My posts",
-  "post.create": "Create Post",
-  "post.empty": "There is no post!",
-  "post.title": "Title",
-  "post.description": "Description",
-  "post.body": "Text",
+  "post": {
+    "my": "My posts",
+    "create": "Create Post",
+    "nomore": "No more post",
+    "empty": "There is no post!",
+    "title": "Title",
+    "description": "Description",
+    "body": "Text"
+  },
   "comment": {
     "title": "Comments",
     "create": "Write a comment..."

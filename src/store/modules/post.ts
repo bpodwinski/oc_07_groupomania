@@ -11,7 +11,8 @@ export default class Post extends VuexModule {
     const response = await PostService.getPost(page);
     const data: Array<object> = response.data.posts;
 
-    return this.context.commit("setPosts", data);
+    this.context.commit("setPosts", data);
+    return data;
   }
 
   @Action({ rawError: true })
