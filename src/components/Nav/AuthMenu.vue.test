@@ -1,0 +1,67 @@
+<template>
+  <div v-if="logged">
+    <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-navigation-drawer v-model="drawer" absolute temporary>
+      <v-list nav dense>
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-title>Foo</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Bar</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Fizz</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item>
+            <v-list-item-title>Buzz</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
+
+  <div v-else>
+    <v-btn text :to="{ name: 'Register' }">
+      <v-icon left>mdi-account-plus</v-icon> {{ $t("register") }}
+    </v-btn>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { namespace, State } from "vuex-class";
+
+const login = namespace("login");
+const account = namespace("account");
+
+@Component
+export default class AuthMenu extends Vue {
+  @State account;
+  @State(state => state.login.logged) logged: boolean;
+  drawer = false;
+  group = true;
+
+  @Watch("group")
+  test() {
+    this.drawer = false;
+  }
+
+  @login.Action
+  private Logout!: () => Promise<void | any>;
+
+  public logout() {
+    this.Logout();
+  }
+
+  get gravatar() {
+    return this.account.data.gravatar + "?d=retro";
+  }
+}
+</script>
