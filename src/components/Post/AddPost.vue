@@ -28,9 +28,10 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import { namespace, State } from "vuex-class";
 
 const post = namespace("post");
+const login = namespace("login");
 
 @Component
 export default class AddPost extends Vue {
@@ -38,13 +39,14 @@ export default class AddPost extends Vue {
     title: "",
     content: "",
   };
+  @State(state => state.login.userId) userId: number;
 
   @post.Action
   private addPost!: (post: object) => Promise<void | any>;
 
   public sendPost(): void {
     const post: object = {
-      userId: this.$store.state.login.credentials.userId,
+      userId: this.userId,
       title: this.data.title,
       content: this.data.content,
     };

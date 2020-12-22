@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5 mb-15">
+  <div class="mt-5 mb-20">
     <v-card
       v-for="(post, index) in posts"
       :key="index"
@@ -9,8 +9,7 @@
       <!-- ******** TITLE POST START ******** -->
       <v-app-bar flat>
         <v-toolbar-title class="title">
-          id: {{ post.id }} - {{ post.user.firstname }}
-          {{ post.user.lastname }} userId :{{ post.user.id }}
+          {{ post.user.firstname }} {{ post.user.lastname }}
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -50,53 +49,9 @@
       </v-card-text>
       <!-- ******** POST CONTENT END ******** -->
 
-      <!-- ******** COMMENTS START ******** -->
       <v-card-actions>
-        <v-container>
-          <!-- add comment form -->
-          <v-form>
-            <v-text-field
-              v-model="commentcontent[index]"
-              append-icon="mdi-send"
-              filled
-              type="text"
-              :label="$t('comment.create')"
-              @click:append="submitComment(post.id, commentcontent[index])"
-            ></v-text-field>
-          </v-form>
-
-          <!-- comments list -->
-          <v-expansion-panels flat>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                {{ $t("comment.title") }}</v-expansion-panel-header
-              >
-              <v-expansion-panel-content
-                v-for="(comment, index) in post.comments"
-                :key="index"
-              >
-                <v-list>
-                  <v-list-item>
-                    <v-list-item-content>
-                      <v-list-item-title
-                        >{{ comment.user.firstname }}
-                        {{ comment.user.lastname }}
-                      </v-list-item-title>
-                      <v-list-item-subtitle>{{
-                        comment.createdAt | dateFromNow
-                      }}</v-list-item-subtitle>
-                      <v-list-item-content class="comment-content">{{
-                        comment.content
-                      }}</v-list-item-content>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-container>
+        <CommentList :postId="post.id" />
       </v-card-actions>
-      <!-- ******** COMMENTS END ******** -->
     </v-card>
 
     <!-- ******** LOADMORE TRANSITION START ******** -->
@@ -126,7 +81,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { namespace, State } from "vuex-class";
 import InfiniteLoading from "vue-infinite-loading";
-import vueDebounce, { PluginConfig, debounce } from "vue-debounce";
+import CommentList from "../Comment/CommentList.vue";
 
 const post = namespace("post");
 const login = namespace("login");
@@ -135,13 +90,14 @@ const comment = namespace("comment");
 @Component({
   components: {
     InfiniteLoading,
+    CommentList,
   },
 })
 export default class PostList extends Vue {
   private loadmore = false;
   private page = 0;
-  private commentcontent: any = {};
   @State(state => state.post.posts) posts: [];
+  @State(state => state.comment.data) comments: [];
   @State(state => state.login.userId) userId: number;
 
   @post.Action
@@ -149,9 +105,6 @@ export default class PostList extends Vue {
 
   @post.Action
   private deletePost!: (id: number) => Promise<void | any>;
-
-  @comment.Action
-  private addComment!: (comment: object) => Promise<void | any>;
 
   public async infiniteHandler($state) {
     await new Promise(r => setTimeout(r, 500));
@@ -163,15 +116,6 @@ export default class PostList extends Vue {
         $state.complete();
       }
     });
-  }
-
-  public submitComment(postId: number, commentcontent: string): void {
-    const comment = {
-      userId: this.$store.state.login.credentials.userId,
-      postId: postId,
-      content: commentcontent,
-    };
-    this.addComment(comment);
   }
 }
 </script>
@@ -185,12 +129,5 @@ export default class PostList extends Vue {
 .fade-leave-to {
   opacity: 0;
   transform: translateY(10px);
-}
-
-.comment-content {
-  background-color: rgba(0, 0, 0, 0.05);
-  margin-top: 0.5rem;
-  padding: 1rem;
-  border-radius: 1rem;
 }
 </style>

@@ -1,67 +1,83 @@
 <template>
-  <div class="mt-5 mb-15">
-    <template v-if="comment[index].data.length">
-      <v-expansion-panels flat>
-        <v-expansion-panel>
-          <v-expansion-panel-header>
-            {{ comment[index].data.length }}
-            {{ $t("comment.title") }}</v-expansion-panel-header
-          >
-          <v-expansion-panel-content>
-            <v-list>
-              <template v-for="(comment, index) in comment">
-                <v-list-item :key="index">
-                  <v-list-item-content class="mb-5">
-                    <v-list-item-title class="mb-2">
-                      {{ comment.user.firstname }}
+  <v-container>
+    <v-expansion-panels flat>
+      <v-expansion-panel>
+        <v-expansion-panel-header @click.once="showComment(postId)">
+          {{ $t("comment.title") }}
+        </v-expansion-panel-header>
+
+        <v-expansion-panel-content>
+          <AddComment :postId="postId" />
+          <template v-for="comment in comments">
+            <template v-if="comment.comments.length">
+              <v-list :key="comment.postID" v-if="comment.postID === postId">
+                <v-list-item
+                  v-for="(comment, index) in comment.comments"
+                  :key="index"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title
+                      >{{ comment.user.firstname }}
                       {{ comment.user.lastname }}
                     </v-list-item-title>
-                    <v-list-item-subtitle>{{
-                      comment.user.createdAt
-                    }}</v-list-item-subtitle>
-                    <v-list-item-content class="comment-text">{{
-                      comment.text
+                    <v-list-item-subtitle>
+                      {{ comment.createdAt | dateFromNow }}
+                    </v-list-item-subtitle>
+                    <v-list-item-content class="comment-content">{{
+                      comment.content
                     }}</v-list-item-content>
                   </v-list-item-content>
                 </v-list-item>
-              </template>
-            </v-list>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </template>
-  </div>
+              </v-list>
+            </template>
+          </template>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-container>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { namespace, State } from "vuex-class";
+import AddComment from "./AddComment.vue";
 
 const comment = namespace("comment");
 
-@Component
-export default class PostList extends Vue {
-  private comment: object[];
-  private userID: number = this.$store.getters["user"].userId;
+@Component({
+  components: {
+    AddComment,
+  },
+})
+export default class CommentList extends Vue {
+  private commentcontent = "";
+  @State(state => state.comment.comments) comments: [];
+  @Prop(Number) readonly postId: number;
 
   @comment.Action
-  private getComment!: (postId: number) => Promise<void | any>;
+  private getComment!: (id: number) => Promise<void | any>;
+
+  @comment.Action
+  private addComment!: (comment: object) => Promise<void | any>;
+
+  public showComment(postId: number) {
+    this.getComment(postId);
+  }
+
+  public submitComment(postId: number, commentcontent: string): void {
+    const comment = {
+      userId: this.$store.state.login.userId,
+      postId: postId,
+      content: commentcontent,
+    };
+    this.addComment(comment);
+  }
 }
 </script>
 
 <style lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.2s ease-in-out;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.comment-text {
-  background-color: rgba(0, 0, 0, 0.05);
+.comment-content {
+  background-color: rgba(128, 128, 128, 0.18);
   margin-top: 0.5rem;
   padding: 1rem;
   border-radius: 1rem;

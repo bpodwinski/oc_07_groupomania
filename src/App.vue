@@ -15,11 +15,6 @@
 
       <v-spacer></v-spacer>
 
-      <v-app-bar-nav-icon
-        class="hidden-md-and-up"
-        @click="drawer = true"
-      ></v-app-bar-nav-icon>
-
       <SwitchLanguage />
       <AuthMenu />
     </v-app-bar>

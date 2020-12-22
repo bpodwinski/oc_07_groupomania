@@ -3,7 +3,6 @@ import PostService from "../../services/PostService";
 
 @Module({ namespaced: true })
 export default class Post extends VuexModule {
-  // state
   public posts: Array<object> = [];
 
   @Action({ rawError: true })
@@ -30,27 +29,37 @@ export default class Post extends VuexModule {
     return this.context.commit("removePost", id);
   }
 
+  @Action({ rawError: true })
+  async getComment(postId: number): Promise<void | any> {
+    const response: any = await PostService.getPostComment(postId);
+    const data: object = response.data;
+
+    return this.context.commit("setComments", data);
+  }
+
   @Mutation
   setPosts(posts: Array<object>) {
-    this.posts = this.posts.concat(posts);
+    return (this.posts = this.posts.concat(posts));
   }
 
   @Mutation
   newPost(post: object) {
-    this.posts.unshift(post);
+    return this.posts.unshift(post);
   }
 
   @Mutation
   removePost(id: number) {
-    this.posts = this.posts.filter(post => post.id !== id);
+    return (this.posts = this.posts.filter(post => post.id !== id));
   }
 
   @Mutation
-  newComment(post: object) {
+  setComments(data: object) {
     for (let i = 0; i < this.posts.length; i++) {
-      if (this.posts[i].id === post.postId) {
-        const comments = this.posts[i].comments;
-        return comments.unshift(post);
+      if (this.posts[i].id === data.postID) {
+        const comments: object = {
+          comments: data.comments,
+        };
+        return Object.assign(this.posts[i], comments);
       }
     }
   }

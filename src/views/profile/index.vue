@@ -10,11 +10,12 @@
         <v-container>
           <v-row>
             <v-col cols="12" class="d-flex justify-center">
-              <v-gravatar
-                :email="account.data.email"
-                alt="Avatar"
-                :size="150"
-              />
+              <v-avatar>
+                <img
+                  :src="gravatar"
+                  :alt="account.data.firstname + ' ' + account.data.lastname"
+                />
+              </v-avatar>
             </v-col>
             <v-col cols="12">
               <validation-provider
@@ -97,13 +98,10 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { State, Action, namespace } from "vuex-class";
-import Gravatar from "vue-gravatar";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import UserService from "../../services/UserService";
 
 const account = namespace("account");
-
-Vue.component("v-gravatar", Gravatar);
 
 @Component({
   components: {
@@ -113,5 +111,9 @@ Vue.component("v-gravatar", Gravatar);
 })
 export default class Account extends Vue {
   @State account;
+
+  get gravatar() {
+    return this.account.data.gravatar + "?d=retro";
+  }
 }
 </script>
