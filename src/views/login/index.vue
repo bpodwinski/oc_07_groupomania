@@ -119,7 +119,7 @@ export default class Login extends Vue {
 
   public async loginRequest() {
     this.loading = true;
-    //this.$refs.loginForm.validate(); // TODO: Fix vue validate in TS
+    //this.$refs.loginForm.validate(); // //FIX: vue validate don't work with typescripts
     await new Promise(sleep => setTimeout(sleep, 1000));
 
     await this.Login({

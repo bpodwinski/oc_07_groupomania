@@ -159,7 +159,7 @@ export default class Register extends Vue {
   private Login!: (credentials: object) => Promise<void | any>;
 
   public async register() {
-    //this.$refs.form.validate();
+    //this.$refs.form.validate(); //FIX: vue validate don't work with typescripts
 
     await this.Register({
       firstname: this.firstname,
