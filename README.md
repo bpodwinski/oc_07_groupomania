@@ -1,29 +1,27 @@
-# groupomania
+# Groupomania
 
-## Project setup
-```
-npm install
-```
+## Installation du backend API
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Installer un serveur Mysql/MariaDB.
 
-### Compiles and minifies for production
+Lancer la commande :
+
 ```
-npm run build
+make backend
 ```
 
-### Run your unit tests
+Dans le dossier "api/utils/" et renommer le fichier ".env.production.example" en ".env.production" et editer le fichier.
+
+## Installation du frontend
+
+Lancer la commande :
+
 ```
-npm run test:unit
+make install
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Démrarrer l'application
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+make dev
+```
