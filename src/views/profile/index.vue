@@ -3,10 +3,37 @@
     <v-app-bar flat dark center color="indigo">
       <v-icon class="mr-4">mdi-account</v-icon>
       <v-toolbar-title>{{ $t("profile") }}</v-toolbar-title>
+      <i class="ml-2" v-if="account.data.admin">({{ $t("administrator") }})</i>
+      <v-spacer></v-spacer>
+      <v-dialog v-model="dialog" persistent max-width="640">
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="error" v-bind="attrs" v-on="on">
+            <v-icon>mdi-close</v-icon>
+            {{ $t("delete") }}
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title class="headline">{{
+            $t("deleteConfirm")
+          }}</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="red darken-1"
+              text
+              @click="removeUser(login.userId)"
+              >{{ $t("yes") }}</v-btn
+            >
+            <v-btn color="green darken-1" text @click="dialog = false">
+              {{ $t("no") }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-app-bar>
 
     <validation-observer ref="userForm" v-slot="{ invalid }">
-      <v-form @submit.prevent="submit" class="px-5 py-2">
+      <v-form @submit.prevent="userFormRequest" class="px-5 py-2">
         <v-container>
           <v-row>
             <v-col cols="12" class="d-flex justify-center">
@@ -99,8 +126,8 @@
 import { Component, Vue } from "vue-property-decorator";
 import { State, Action, namespace } from "vuex-class";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-import UserService from "../../services/UserService";
 
+const login = namespace("login");
 const account = namespace("account");
 
 @Component({
@@ -110,10 +137,38 @@ const account = namespace("account");
   },
 })
 export default class Account extends Vue {
+  private dialog = false;
   @State account;
+  @State login;
 
   get gravatar() {
     return this.account.data.gravatar + "?d=retro";
+  }
+
+  @account.Action
+  private updateUser!: (data: object) => Promise<void | any>;
+
+  @account.Action
+  private deleteUser!: (id: number) => Promise<void | any>;
+
+  public userFormRequest() {
+    //this.$refs.loginForm.validate(); // //FIX: vue validate don't work with typescripts
+
+    //console.log(this.account.data);
+
+    const data: object = {
+      id: this.login.userId,
+      firstname: this.account.data.firstname,
+      lastname: this.account.data.lastname,
+      service: this.account.data.service,
+      email: this.account.data.email,
+    };
+
+    this.updateUser(data);
+  }
+
+  public removeUser(id: number) {
+    this.deleteUser(id);
   }
 }
 </script>

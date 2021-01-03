@@ -1,4 +1,6 @@
 {
+  "yes": "Yes",
+  "no": "No",
   "register": "Sign Up",
   "firstname": "First Name",
   "lastname": "Last Name",
@@ -12,8 +14,10 @@
   "login.error.badpassword": "Passwords don't match",
   "logout": "Logout",
   "profile": "My profile",
+  "administrator": "Administrator",
   "update": "Update",
   "delete": "Delete",
+  "deleteConfirm": "Are you sure you delete your account?",
   "return": "Return",
   "send": "Send",
   "post": {

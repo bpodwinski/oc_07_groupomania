@@ -1,4 +1,6 @@
 {
+  "yes": "Oui",
+  "no": "Non",
   "register": "S'enregistrer",
   "firstname": "Prénom",
   "lastname": "Nom",
@@ -12,8 +14,10 @@
   "login.error.badpassword": "Mauvais mot de passe",
   "logout": "Déconnexion",
   "profile": "Mon profil",
+  "administrator": "Administrateur",
   "update": "Mettre à jour",
   "delete": "Supprimer",
+  "deleteConfirm": "Êtes vous sûr de supprimer votre compte ?",
   "return": "Retour",
   "send": "Envoyer",
   "post": {

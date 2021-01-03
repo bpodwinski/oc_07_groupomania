@@ -19,6 +19,25 @@ export default class Account extends VuexModule {
     return this.context.commit("getUserSuccess", data);
   }
 
+  @Action({ rawError: true })
+  async updateUser(data: any): Promise<void | any> {
+    await UserService.updateUser(data.id, {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      service: data.service,
+    });
+
+    return this.context.dispatch("getUser", data.id);
+  }
+
+  @Action({ rawError: true })
+  async deleteUser(id: number): Promise<void | any> {
+    await UserService.deleteUser(id);
+
+    return this.context.dispatch("login/Logout", null, { root: true });
+  }
+
   @Mutation
   getUserSuccess(data: object) {
     this.data = data;

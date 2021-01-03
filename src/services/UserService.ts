@@ -7,4 +7,7 @@ export default {
   updateUser(id: number, data: object) {
     return Api.post("/user/" + id, data);
   },
+  deleteUser(id: number) {
+    return Api.delete("/user/" + id);
+  },
 };
