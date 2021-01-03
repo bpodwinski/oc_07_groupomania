@@ -1,4 +1,4 @@
-API_VER="1.6.0"
+API_VER="1.6.1"
 
 export API_VER
 
