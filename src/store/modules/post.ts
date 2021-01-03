@@ -4,6 +4,12 @@ import PostService from "../../services/PostService";
 @Module({ namespaced: true })
 export default class Post extends VuexModule {
   public posts: Array<object> = [];
+  public page = 0;
+
+  @Action({ rawError: true })
+  async setPage(): Promise<void | any> {
+    return this.context.commit("addPage");
+  }
 
   @Action({ rawError: true })
   async getPosts(page: number): Promise<void | any> {
@@ -35,6 +41,11 @@ export default class Post extends VuexModule {
     const data: object = response.data;
 
     return this.context.commit("setComments", data);
+  }
+
+  @Mutation
+  addPage() {
+    this.page++;
   }
 
   @Mutation

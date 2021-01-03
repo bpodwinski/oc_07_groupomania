@@ -19,7 +19,11 @@
           {{ post.createdAt | dateFromNow }}
         </div>
 
-        <v-menu v-if="post.user.id === userId" bottom left>
+        <v-menu
+          v-if="post.user.id === userId || account.data.admin"
+          bottom
+          left
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon>mdi-dots-vertical</v-icon>
@@ -85,6 +89,7 @@ import CommentList from "../Comment/CommentList.vue";
 
 const post = namespace("post");
 const login = namespace("login");
+const account = namespace("account");
 const comment = namespace("comment");
 
 @Component({
@@ -95,10 +100,14 @@ const comment = namespace("comment");
 })
 export default class PostList extends Vue {
   private loadmore = false;
-  private page = 0;
+  @State account;
+  @State(state => state.post.page) page: number;
   @State(state => state.post.posts) posts: [];
   @State(state => state.comment.data) comments: [];
   @State(state => state.login.userId) userId: number;
+
+  @post.Action
+  private setPage!: () => Promise<void | any>;
 
   @post.Action
   private getPosts!: (page: number) => Promise<void | any>;
@@ -110,7 +119,7 @@ export default class PostList extends Vue {
     await new Promise(r => setTimeout(r, 500));
     this.getPosts(this.page).then(response => {
       if (response.length) {
-        this.page++;
+        this.setPage();
         $state.loaded();
       } else {
         $state.complete();
