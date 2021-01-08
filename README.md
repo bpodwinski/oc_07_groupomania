@@ -1,6 +1,8 @@
 # Groupomania
 
+<p align="center">
 ![](preview.gif)
+</p>
 
 ## Installation du backend API
 
