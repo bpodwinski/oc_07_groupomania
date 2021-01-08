@@ -3,14 +3,17 @@
     <v-app-bar flat dark center color="indigo">
       <v-icon class="mr-4">mdi-account</v-icon>
       <v-toolbar-title>{{ $t("profile") }}</v-toolbar-title>
-      <i class="ml-2" v-if="account.data.admin">({{ $t("administrator") }})</i>
+      <i class="ml-2" v-if="account.data.role === 'admin'"
+        >({{ $t("administrator") }})</i
+      >
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" persistent max-width="640">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="error" v-bind="attrs" v-on="on">
-            <v-icon>mdi-close</v-icon>
-            {{ $t("delete") }}
-          </v-btn>
+          <v-badge bordered color="error" icon="mdi-close" overlap>
+            <v-btn color="error" v-bind="attrs" v-on="on">
+              {{ $t("delete") }}
+            </v-btn>
+          </v-badge>
         </template>
         <v-card>
           <v-card-title class="headline">{{
@@ -39,7 +42,7 @@
             <v-col cols="12" class="d-flex justify-center">
               <v-avatar>
                 <img
-                  :src="gravatar"
+                  :src="account.data.gravatar"
                   :alt="account.data.firstname + ' ' + account.data.lastname"
                 />
               </v-avatar>
@@ -140,10 +143,6 @@ export default class Account extends Vue {
   private dialog = false;
   @State account;
   @State login;
-
-  get gravatar() {
-    return this.account.data.gravatar + "?d=retro";
-  }
 
   @account.Action
   private updateUser!: (data: object) => Promise<void | any>;

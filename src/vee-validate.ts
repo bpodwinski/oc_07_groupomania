@@ -1,5 +1,5 @@
 import { extend, configure } from "vee-validate";
-import { required, email, min, max } from "vee-validate/dist/rules";
+import { required, email, min, max, image } from "vee-validate/dist/rules";
 import i18n from "@/i18n";
 
 configure({
@@ -14,3 +14,4 @@ extend("required", required);
 extend("min", min);
 extend("max", max);
 extend("email", email);
+extend("image", image);

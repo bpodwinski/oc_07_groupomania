@@ -10,13 +10,7 @@ export default class Account extends VuexModule {
   async getUser(id: number): Promise<void | any> {
     const response = await UserService.getUser(id);
 
-    const data = Object.assign(response.data, {
-      gravatar:
-        "https://www.gravatar.com/avatar/" +
-        md5(response.data.email.trim().toLowerCase()),
-    });
-
-    return this.context.commit("getUserSuccess", data);
+    return this.context.commit("getUserSuccess", response.data);
   }
 
   @Action({ rawError: true })

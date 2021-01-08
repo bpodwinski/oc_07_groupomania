@@ -1,5 +1,7 @@
 # Groupomania
 
+![](preview.gif)
+
 ## Installation du backend API
 
 Installer un serveur Mysql/MariaDB.

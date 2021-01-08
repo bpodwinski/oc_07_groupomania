@@ -9,7 +9,8 @@
       <!-- ******** TITLE POST START ******** -->
       <v-app-bar flat>
         <v-toolbar-title class="title">
-          {{ post.user.firstname }} {{ post.user.lastname }}
+          <UserInfoTooltip :user="post.user" />
+          <span>{{ post.user.firstname }} {{ post.user.lastname }}</span>
         </v-toolbar-title>
 
         <v-spacer></v-spacer>
@@ -19,11 +20,7 @@
           {{ post.createdAt | dateFromNow }}
         </div>
 
-        <v-menu
-          v-if="post.user.id === userId || account.data.admin"
-          bottom
-          left
-        >
+        <v-menu v-if="account.data.role === 'admin'" bottom left>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon v-bind="attrs" v-on="on">
               <v-icon>mdi-dots-vertical</v-icon>
@@ -46,6 +43,13 @@
       <!-- ******** TITLE POST END ******** -->
 
       <!-- ******** POST CONTENT START ******** -->
+      <v-img
+        v-if="post.imgUrl"
+        :src="'http://crios.local:3000' + post.imgUrl"
+        height="300px"
+        gradient="to top right, rgba(100,115,201,.12), rgba(25,32,72,.3)"
+      ></v-img>
+
       <v-card-title> {{ post.title }} </v-card-title>
 
       <v-card-text>
@@ -86,6 +90,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { namespace, State } from "vuex-class";
 import InfiniteLoading from "vue-infinite-loading";
 import CommentList from "../Comment/CommentList.vue";
+import UserInfoTooltip from "../User/UserInfoTooltip.vue";
 
 const post = namespace("post");
 const login = namespace("login");
@@ -96,6 +101,7 @@ const comment = namespace("comment");
   components: {
     InfiniteLoading,
     CommentList,
+    UserInfoTooltip,
   },
 })
 export default class PostList extends Vue {

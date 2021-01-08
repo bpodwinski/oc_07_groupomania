@@ -5,7 +5,7 @@
         <v-btn text v-bind="attrs" v-on="on">
           <v-avatar>
             <img
-              :src="gravatar"
+              :src="account.data.gravatar"
               :alt="account.data.firstname + ' ' + account.data.lastname"
             />
           </v-avatar>
@@ -56,10 +56,6 @@ export default class AuthMenu extends Vue {
 
   public logout() {
     this.Logout();
-  }
-
-  get gravatar() {
-    return this.account.data.gravatar + "?d=retro";
   }
 }
 </script>

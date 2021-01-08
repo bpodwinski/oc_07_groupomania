@@ -16,8 +16,9 @@
                   :key="index"
                 >
                   <v-list-item-content>
-                    <v-list-item-title
-                      >{{ comment.user.firstname }}
+                    <v-list-item-title>
+                      <UserInfoTooltip :user="comment.user" />
+                      {{ comment.user.firstname }}
                       {{ comment.user.lastname }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
@@ -41,12 +42,14 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { namespace, State } from "vuex-class";
 import AddComment from "./AddComment.vue";
+import UserInfoTooltip from "../User/UserInfoTooltip.vue";
 
 const comment = namespace("comment");
 
 @Component({
   components: {
     AddComment,
+    UserInfoTooltip,
   },
 })
 export default class CommentList extends Vue {
