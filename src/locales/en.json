@@ -27,7 +27,8 @@
     "empty": "There is no post!",
     "title": "Title",
     "description": "Description",
-    "body": "Text"
+    "body": "Text",
+    "image": "Image"
   },
   "comment": {
     "title": "Comments",

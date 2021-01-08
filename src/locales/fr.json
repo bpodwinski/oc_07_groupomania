@@ -27,7 +27,8 @@
     "empty": "Il n'y a aucun message !",
     "title": "Titre",
     "description": "Description",
-    "body": "Texte"
+    "body": "Texte",
+    "image": "Image"
   },
   "comment": {
     "title": "Commentaires",
